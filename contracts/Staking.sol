@@ -6,8 +6,9 @@ import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 import "./WRLDhorses.sol";
+import "./WRLDCollection.sol"; //tempory (hardhat test)
 
-contract NFTStaking is Ownable, IERC721Receiver {
+contract WRLDStaking is Ownable, IERC721Receiver {
     uint256 public totalStaked;
 
     // struct to store a stake's token, owner, and earning values
@@ -22,18 +23,18 @@ contract NFTStaking is Ownable, IERC721Receiver {
     event Claimed(address owner, uint256 amount);
 
     // reference to the Block NFT contract
-    IERC721Enumerable nft;
+    WorldHorses nft; //WorldHorses IERC721Enumerable
     WRLDhorses token;
 
     // maps tokenId to stake
     mapping(uint256 => Stake) public vault;
 
-    constructor(IERC721Enumerable _nft, WRLDhorses _token) {
+    constructor(WorldHorses _nft, WRLDhorses _token) {
         nft = _nft;
         token = _token;
     }
 
-    function stake(uint256[] calldata tokenIds) external {
+    function stake(uint256[] calldata tokenIds) public {
         uint256 tokenId;
         totalStaked += tokenIds.length;
         for (uint i = 0; i < tokenIds.length; i++) {
@@ -68,7 +69,7 @@ contract NFTStaking is Ownable, IERC721Receiver {
         }
     }
 
-    function claim(uint256[] calldata tokenIds) external {
+    function claim(uint256[] calldata tokenIds) public {
         _claim(msg.sender, tokenIds, false);
     }
 
@@ -86,7 +87,7 @@ contract NFTStaking is Ownable, IERC721Receiver {
         address account,
         uint256[] calldata tokenIds,
         bool _unstake
-    ) internal {
+    ) public {
         uint256 tokenId;
         uint256 earned = 0;
 
@@ -113,7 +114,7 @@ contract NFTStaking is Ownable, IERC721Receiver {
     }
 
     function earningInfo(address account, uint256[] calldata tokenIds)
-        external
+        public
         view
         returns (uint256[1] memory info)
     {
