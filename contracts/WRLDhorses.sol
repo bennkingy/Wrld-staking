@@ -12,7 +12,7 @@ contract WRLDhorses is ERC20, ERC20Burnable, Ownable {
         _mint(msg.sender, 9 * 10**decimals());
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public {
         require(controllers[msg.sender], "Only controllers can mint");
 
         _mint(to, amount);

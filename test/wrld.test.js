@@ -104,12 +104,13 @@ describe("Stake Contract", function () {
     expect(await nftStaking?.owner()).to.equal(owner.address);
   }).timeout(10000);
   it("stake", async () => {
-    await nftStaking?.stake([1]);
+    await nftStaking?.stake([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
   }).timeout(10000);
-  // it("unstake", async () => {
-  //   await nftStaking?.unstake([1]);
-  // }).timeout(10000);
-  // it("claim", async () => {
-  //   await nftStaking?.claim([1]);
-  // }).timeout(10000);
+
+  it("unstake", async () => {
+    await nftStaking?.connect(owner)._unstakeMany(owner.address, [1]);
+  }).timeout(10000);
+  it("claim", async () => {
+    await nftStaking?.claim([2]);
+  }).timeout(10000);
 });

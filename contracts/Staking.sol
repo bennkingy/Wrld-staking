@@ -53,9 +53,7 @@ contract WRLDStaking is Ownable, IERC721Receiver {
         }
     }
 
-    function _unstakeMany(address account, uint256[] calldata tokenIds)
-        internal
-    {
+    function _unstakeMany(address account, uint256[] calldata tokenIds) public {
         uint256 tokenId;
         totalStaked -= tokenIds.length;
         for (uint i = 0; i < tokenIds.length; i++) {
@@ -79,7 +77,7 @@ contract WRLDStaking is Ownable, IERC721Receiver {
         _claim(account, tokenIds, false);
     }
 
-    function unstake(uint256[] calldata tokenIds) external {
+    function unstake(uint256[] calldata tokenIds) public {
         _claim(msg.sender, tokenIds, true);
     }
 
@@ -87,7 +85,7 @@ contract WRLDStaking is Ownable, IERC721Receiver {
         address account,
         uint256[] calldata tokenIds,
         bool _unstake
-    ) public {
+    ) internal {
         uint256 tokenId;
         uint256 earned = 0;
 
