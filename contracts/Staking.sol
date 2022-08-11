@@ -26,8 +26,10 @@ contract WRLDStaking is Ownable, IERC721Receiver {
     WorldHorses nft; //WorldHorses IERC721Enumerable
     WRLDhorses token;
 
-    // maps tokenId to stake
-    mapping(uint256 => Stake) public vault;
+
+
+    mapping(uint256 => Stake) public vault; // map tokenId to stake
+
 
     constructor(WorldHorses _nft, WRLDhorses _token) {
         nft = _nft;
@@ -171,7 +173,7 @@ contract WRLDStaking is Ownable, IERC721Receiver {
 
         return tokens;
     }
-
+    
     function onERC721Received(
         address,
         address from,
@@ -182,3 +184,5 @@ contract WRLDStaking is Ownable, IERC721Receiver {
         return IERC721Receiver.onERC721Received.selector;
     }
 }
+
+
